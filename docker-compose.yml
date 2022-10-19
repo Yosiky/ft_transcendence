@@ -1,0 +1,56 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    env_file:
+      - ./src/database/postgres.env
+    environment:
+      #
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - 5432:5432
+    networks:
+      - buba
+
+  backend:
+    build:
+      context: ./docker
+      dockerfile: ./backend.dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - backend
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./src/database/backend.env
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
+  react:
+    container_name: react
+    build:
+      context: ./docker
+      dockerfile: ./frontend.dockerfile
+    ports:
+      - 3001:3001
+    networks:
+      - backend
+    volumes:
+      - ./frontend:/app
+    env_file:
+      - ./src/database/frontend.env
+    restart: always
+    depends_on:
+      - backend
+
+volumes:
+  data:
+
+networks:
+  backend:
