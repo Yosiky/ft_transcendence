@@ -1,0 +1,11 @@
+services:
+  nodejs:
+    image: node
+    restart: always
+  pgdb:
+    image: postgresql
+    restart: always
+    environment:
+      POSTGRES_DB: project
+      POSTGRES_USER: eestelle
+      POSTGRES_PASSWORD: 0987

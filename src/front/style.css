@@ -1,0 +1,45 @@
+#wrapper
+{
+   color: #000000;
+}
+
+#btn_start_game
+{
+    display: inline-block; /* Строчно-блочный элемент */
+    background: #8C959D; /* Change color ??? */
+    color: #fff; /* Белый цвет текста */
+    padding: 1rem 1.5rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border: solid;
+    border-radius: 20px; /* Скругляем уголки */
+    border-color: #ff0000; /* Change color ??? */
+    border-width: thick;
+}
+
+
+.btn_sign
+{
+    display: inline-block; /* Строчно-блочный элемент */
+    background: #8C959D; /* Change color ??? */
+    color: #fff; /* Белый цвет текста */
+    padding: 1rem 1.5rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border: solid;
+    border-radius: 20px; /* Скругляем уголки */
+    border-color: #ff0000; /* Change color ??? */
+    border-width: thick;
+}
+
+.btn_logining
+{
+    display: inline-block; /* Строчно-блочный элемент */
+    background: #8C959D; /* Change color ??? */
+    color: #fff; /* Белый цвет текста */
+    padding: 1rem 1.5rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border: solid;
+    border-radius: 20px; /* Скругляем уголки */
+    border-color: #ff0000; /* Change color ??? */
+    border-width: thick;
+}
+
