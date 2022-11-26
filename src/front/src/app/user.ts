@@ -11,4 +11,8 @@ export class User implements IUser {
         this.login = userLogin;
         this.password = userPassword;
     }
+
+    encrypted_password(): any {
+        return btoa(this.password);
+    }
 }
