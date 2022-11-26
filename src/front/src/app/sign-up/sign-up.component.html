@@ -1,0 +1,8 @@
+<h2>Sign up</h2>
+<label for="enter-login">Login: </label>
+<input id="enter-login" [(ngModel)]="user.login" placeholder="login">
+<label for="enter-password">Password: </label>
+<input id="enter-password" [(ngModel)]="user.password" placeholder="password">
+<label for="enter-password-repeat">Repeat password: </label>
+<input id="enter-password-reapeat" [(ngModel)]="repeat_password" placeholder="repeat password">
+<button id="button" (click)="signUp()">Sign up</button>
