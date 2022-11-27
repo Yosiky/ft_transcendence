@@ -49,12 +49,6 @@ export class UserService {
             username: user.userName,
             password_hash: encrypted_password,
           });
-
-
-        fetch(url, {method: "POST", body: data,headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          }});
         return url;
     }
 
