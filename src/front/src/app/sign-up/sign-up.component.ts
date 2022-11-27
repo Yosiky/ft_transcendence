@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
-import { User } from '../user';
+import { User, ACCOUNT } from '../user';
 import { UserService } from '../user.service';
 
 
@@ -15,12 +14,30 @@ export class SignUpComponent {
 	user: User = new User('', '');
 	repeat_password: string = "";
 
-	constructor() {
-
+	constructor(
+		private userService: UserService,
+		private router: Router
+	) {
 	}
 
 	signUp(): void {
-
+        if (this.user.userName.trim() !== '' 
+			&& this.user.password.trim() !== '')
+			if (this.user.password.trim() === this.repeat_password)
+				this.userService.register(this.user).subscribe((ans) => {
+					ACCOUNT.password = this.user.password;
+					ACCOUNT.userName = this.user.userName;
+					if (ans !== undefined)
+						ACCOUNT.id = ans;
+					console.log(ACCOUNT);
+					this.goMainPage();
+				});
+			//todo add message about wrong password
+		// else
+		// todo add message about empty login or password
 	}
 
+	goMainPage(): void {
+		this.router.navigateByUrl('/main');
+	}
 }

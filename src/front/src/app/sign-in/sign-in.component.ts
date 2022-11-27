@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
-import { User } from '../user';
+import { User, ACCOUNT } from '../user';
 import { UserService } from '../user.service';
 
 @Component({
@@ -15,18 +14,23 @@ export class SignInComponent {
 
     constructor(
         private userService: UserService,
-        private location: Location,
-        private route: ActivatedRoute
+        private router: Router 
     ) { }
 
     ngOnInit(): void { }
 
     signIn(): void {
-        if (this.user.login.trim() !== '')
-            this.userService.authorization(this.user).subscribe(() => this.goBack());
+        if (this.user.userName.trim() !== '' && this.user.password.trim() !== '')
+            this.userService.authorization(this.user);
+            // .subscribe((ans) => {
+            //     ACCOUNT.userName = this.user.userName;
+            //     ACCOUNT.password = this.user.password;
+            //     ACCOUNT.id = ans;
+            //     this.goMainPage();
+            // });
     }
 
-    goBack(): void {
-        this.location.back();
+    goMainPage(): void {
+        this.router.navigateByUrl('/main');
     }
 }

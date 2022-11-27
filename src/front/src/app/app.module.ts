@@ -7,12 +7,16 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { HeaderComponent } from './header/header.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    HeaderComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

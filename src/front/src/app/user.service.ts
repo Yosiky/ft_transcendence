@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import fetch from '../../node_modules/node-fetch';
+
 
 import { User } from './user';
 
@@ -10,9 +12,10 @@ import { User } from './user';
     providedIn: 'root'
 })
 export class UserService {
-    private signInUser: string = "api/user/get/signIn";
-    private signUpUser: string = "api/user/get/signUp";
-    //private signUpUser: string = "api/user/get/signUp";
+    private start_url: string = "https://940c-213-87-151-8.eu.ngrok.io/";
+    private signInUser: string = "api/user/check";
+    private signUpUser: string = "api/user/add";
+    private getUserId: string = "api/user/get";
 
     constructor(
         private http: HttpClient,
@@ -34,13 +37,37 @@ export class UserService {
         headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
 
+    getUrl(url:string, userName: string): string {
+        return `$(start_url)$(url)$(userName)`;
+    }
 
-    authorization(user: User): Observable<User> {
+
+    authorization(user: User): string {
         const encrypted_password: string = user.encrypted_password();
-        const url: string = `${this.signInUser}/${user.login}`;
-        return this.http.post<User>(url, encrypted_password, this.httpOptions).pipe(
-            tap(_ => this.log(`fetched user login = ${user.login}`)),
-            catchError(this.handleError<User>(`getUser = ${user.login}`))
+        const url: string = this.getUrl(this.signInUser, user.userName);
+        const data: string = JSON.stringify({
+            username: user.userName,
+            password_hash: encrypted_password,
+          });
+
+
+        fetch(url, {method: "POST", body: data,headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          }});
+        return url;
+    }
+
+    register(user: User): Observable<string> {
+        const encrypted_password: string = user.encrypted_password();
+        const url: string = this.getUrl(this.signUpUser, user.userName);
+        const data: JSON = <JSON><unknown>{
+            "username": user.userName,
+            "password": encrypted_password 
+        };
+        return this.http.post<string>(url, data, this.httpOptions).pipe(
+            tap(_ => this.log(`fetched user userName = ${user.userName}`)),
+            catchError(this.handleError<string>(`getUser = ${user.userName}`))
         );
     }
 }
