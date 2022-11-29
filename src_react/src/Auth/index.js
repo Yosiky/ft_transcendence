@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import logo from './images.png';
 
 export class Auth extends React.Component {
 
@@ -23,12 +24,13 @@ export class Auth extends React.Component {
 
     render() {
         return (
-            <div>
-                <label className={this.state.errorLogin}>Login</label>
-                <input type='text' value={this.state.login} onChange={(event) => this.handleLoginChange(event)}/>
-                <label className={this.state.errorPassword}>Password</label>
-                <input type='password' value={this.state.password} onChange={(event) => this.handlePasswordChange(event)}/>
-                <button onClick={() => this.auth()} >{this.props.buttonValue}</button>
+            <div className='Auth'>
+                <img src={logo} alt="Logo"/>
+                <label className={this.state.errorLogin}>Login:
+                <input type='text' value={this.state.login} onChange={(event) => this.handleLoginChange(event)}/></label>
+                <label className={this.state.errorPassword}>Password:
+                <input type='password' value={this.state.password} onChange={(event) => this.handlePasswordChange(event)}/></label>
+                <button  onClick={() => this.auth()} >{this.props.buttonValue}</button>
             </div>
         );
     }
