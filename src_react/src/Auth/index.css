@@ -26,12 +26,22 @@ img {
 
 label {
     margin-left: auto;
-    margin-right: 15px;
+    margin-right: 10px;
     margin-top: 10px;
 }
 
 button {
-    margin-top: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
     margin-left: 10px;
     margin-right: 10px;
+    border: solid;
+    border-radius: 2em;
+    border-width: 2px;
+    border-color: grey;
+}
+
+input {
+    margin-left: 5px;
+
 }

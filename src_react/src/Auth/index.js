@@ -50,8 +50,6 @@ export class Auth extends React.Component {
         const userInfo = [this.state.login.trim(), this.state.password.trim()];
         if (userInfo[0] === '' || userInfo[1] === '')
             return this.retry(userInfo);
-        console.log("userInfo: ");
-        console.log(userInfo);
         this.props.onClick(userInfo);
     }
 }
