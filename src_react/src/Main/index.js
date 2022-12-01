@@ -9,8 +9,7 @@ export class Main extends React.Component {
         return (
             <div className="Main">
                 <img src={game} alt="GameLogo"/>
-                <button >Start</button>
-                
+                <button onClick={this.props.onClick}>Start</button>
             </div>
         );
 

@@ -1,26 +1,48 @@
-let get_req = new XMLHttpRequest();
-let post_req = new XMLHttpRequest();
-let put_req = new XMLHttpRequest();
-let url = 'https://a45c-46-39-51-194.eu.ngrok.io/api/user/get/all';
+let apiUserAdd = '/api/user/add';
+let apiUserGetAll= '/api/user/get/all';
+let apiEngineCreateRoom = '/api/engine/create_room'
+let url = 'https://246d-46-39-51-194.eu.ngrok.io';
 
-export function requestAddUser(userJson) {
+export function requestPostUserAdd(userJson) {
     let req = new XMLHttpRequest();
-    req.open('POST', url);
+
+    req.onload = () => {
+        if (req.status !== 200)
+            alert('Error: ' + req.status);
+        console.log(req.response);
+        return ;
+    };
+    req.onerror = () => { alert('Error connecting'); };
+    req.open('POST', url + apiUserAdd);
     req.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-    req.responseType = 'json';
-    req.opload = () => {
+    req.send(userJson);
+}
+
+export function requestGetUserGetAll() {
+    let req = new XMLHttpRequest();
+
+    req.onload = () => {
         if (req.status !== 200)
             alert('Error: ' + req.status);
         return ;
     };
     req.onerror = () => { alert('Error connecting'); };
-    req.onprogress = (event) => {
-        if (event.lengthComputable) {
-            alert(`Получено ${event.loaded} из ${event.total} байт`);
-        } else {
-            alert(`Получено ${event.loaded} байт`); // если в ответе нет заголовка Content-Length
-        }
-    }
-    req.timeout = 10000;
-    req.send(userJson);
+    req.open('GET', url + apiUserGetAll, false);
+    req.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    req.send();
+    return req.response;
+}
+
+export function requestEngineCreateRoom() {
+    let req = new XMLHttpRequest();
+
+    req.onload = () => {
+        if (req.status !== 200)
+            alert('Error: ' + req.status);
+        return ;
+    };
+    req.onerror = () => { alert('Error connecting'); };
+    req.open('GET', url + apiEngineCreateRoom, false);
+    req.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    req.send();
 }

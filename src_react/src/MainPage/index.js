@@ -2,9 +2,10 @@ import React from 'react';
 import { Main } from '../Main';
 import { ScoreTable } from '../ScoreTable';
 import { HeaderPage } from '../HeaderPage/index'
+import { Game } from '../Game';
 import { Auth } from '../Auth';
 import './index.css';
-import { requestAddUser } from '../HTTPRequest';
+import { requestGetUserGetAll, requestPostUserAdd } from '../HTTPRequest';
 
 export class MainPage extends React.Component {
     constructor(props) {
@@ -33,15 +34,17 @@ export class MainPage extends React.Component {
 
         site.push(<HeaderPage key="HeaderPage" user={this.state.user} links={this.state.links} onClick={(i) => this.handleHeaderClick(i)} onClickExit={() => this.handleExitClick()}/>)
         if (this.state.page === 0)
-            site.push(<Main />);
+            site.push(<Main onClick={() => { this.handleMainClick(); }} />);
         // if (this.state.page === 1)
             // site.push(<Chat />);
         if (this.state.page === 2)
-            site.push(<ScoreTable key="ScoreBoard" user={this.state.user} users={this.state.scoreBoard} />);
+            site.push(<ScoreTable key="ScoreBoard" user={this.getScoarBoard()} users={this.state.scoreBoard} />);
         if (this.state.page === 3)
-            site.push(<Auth key="SignIn" buttonValue="Sign In" onClick={(userInfo) => {this.handlerSignInClick(userInfo);}}/>)
+            site.push(<Auth key="SignIn" buttonValue="Sign In" onClick={(userInfo) => {this.handleSignInClick(userInfo);}}/>)
         if (this.state.page === 4)
-            site.push(<Auth key="SignUp" buttonValue="Sign Up" onClick={(userInfo) => {this.handlerSignUpClick(userInfo);}}/>)
+            site.push(<Auth key="SignUp" buttonValue="Sign Up" onClick={(userInfo) => {this.handleSignUpClick(userInfo);}}/>)
+        if (this.state.page === 5)
+            site.push(<Game key="Game"  />)
         // if (this.state.page === 0) {
             // site.push(<Content />)
         // }
@@ -61,16 +64,37 @@ export class MainPage extends React.Component {
         this.setState({page: i});
     }
 
-    handlerSignInClick(userInfo) {
+    handleSignInClick(userInfo) {
         this.setState({page: 0})
-        this.setState({user: userInfo});
-        console.log(this.state.user);
+        console.log('main', userInfo);
+        this.setState({user: userInfo[0]});
+        console.log('main', this.state.user);
     }
 
-    handlerSignUpClick(userInfo) {
+    handleSignUpClick(userInfo) {
         this.setState({page: 0})
-        this.setState({user: userInfo});
-        console.log(this.state.user);
-        requestAddUser();
+        let res = JSON.stringify({
+            'username': userInfo[0], 'password_hash': userInfo[1]});
+        requestPostUserAdd(res);
     }
+
+    handleMainClick() {
+        if (this.state.user !== null)
+            this.setState({page: 5});
+        else
+            alert(`You don't in account`);
+    }
+
+    updateScoreBoard() {
+        const response = requestGetUserGetAll();
+        console.log('respose user/get/all');
+        console.log(response);
+        this.setState({scoreBoard: response});
+    }
+    
+    getScoarBoard() {
+        this.updateScoreBoard();
+        return (this.state.scoreBoard);
+    }
+
 }
