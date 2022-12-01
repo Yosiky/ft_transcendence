@@ -4,7 +4,5 @@
     width: 18em;
     height: 24em;
     background-color: white;
-    display:flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+
 }

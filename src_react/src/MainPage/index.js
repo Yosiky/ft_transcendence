@@ -4,6 +4,7 @@ import { ScoreTable } from '../ScoreTable';
 import { HeaderPage } from '../HeaderPage/index'
 import { Auth } from '../Auth';
 import './index.css';
+import { requestAddUser } from '../HTTPRequest';
 
 export class MainPage extends React.Component {
     constructor(props) {
@@ -70,5 +71,6 @@ export class MainPage extends React.Component {
         this.setState({page: 0})
         this.setState({user: userInfo});
         console.log(this.state.user);
+        requestAddUser();
     }
 }
