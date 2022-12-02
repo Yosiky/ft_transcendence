@@ -21,13 +21,12 @@ export class HeaderPage extends React.Component {
     render() {
         const names = Object.values(this.props.links);
         const buttons = names.map((value, indx) => {
-            if ((indx === 3 || indx === 4) && this.props.user !== null)
+            if ((indx === 3 || indx === 4) && this.props.userId !== null)
                 return [];
             return this.renderButton(value, indx);
         });
-        if (this.props.user !== null)
+        if (this.props.userId !== null)
             buttons.push(<button key="Exit" className='ImgButton' onClick={this.props.onClickExit}><img src={auth} alt='Picture'/></button>)
-
         return (
             <header>
                 {buttons}

@@ -4,9 +4,20 @@ import './index.css';
 
 export class ScoreTable extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+    }
+
+    someFunc() {
+        return this.props.users();
+    }
+
     render() {
-        const result = this.props.users.map((value, indx) => {
-            return (<span key={indx}>{indx} {value[0]} {value[1]}</span>);
+        console.log('start score board');
+        console.log('user', this.props.user);
+        const result = this.someFunc().map((value, indx) => {
+            return (<span key={indx}>{indx} {value['username'].trim()} {0}</span>);
         }); 
         const user = this.props.user === null ? 
         (<span key={-1}>- You 0</span>)

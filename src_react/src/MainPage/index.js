@@ -5,20 +5,18 @@ import { HeaderPage } from '../HeaderPage/index'
 import { Game } from '../Game';
 import { Auth } from '../Auth';
 import './index.css';
-import { requestGetUserGetAll, requestPostUserAdd } from '../HTTPRequest';
+import { requestGetUserGetAll, requestPutUserAdd, requestPostUserLogin, requestGetUserGetId } from '../HTTPRequest';
 
 export class MainPage extends React.Component {
-    constructor(props) {
+    constructor(userId, userName, scoreBoard, props) {
         super(props);
+        this.userId = null;
+        this.userName = 'none';
+        this.scoreBoard = null;
+        this.getUserName = () => { return this.userName; };
+        this.getScoreBoard = () => { return this.scoreBoard; };
         this.state = {
             page: 0,
-            user: null,
-            scoreBoard: [
-                ['eestelle', 1000],
-                ['tlucanti', 800],
-                ['ntitan', 700],
-                ['aregenia', 500],
-            ],
             links: {
                 main: 'Main Page',
                 chat: 'Chat',
@@ -32,13 +30,13 @@ export class MainPage extends React.Component {
     render() {
         let site = [];
 
-        site.push(<HeaderPage key="HeaderPage" user={this.state.user} links={this.state.links} onClick={(i) => this.handleHeaderClick(i)} onClickExit={() => this.handleExitClick()}/>)
+        site.push(<HeaderPage key="HeaderPage" userId={this.userId} links={this.state.links} onClick={(i) => this.handleHeaderClick(i)} onClickExit={() => this.handleExitClick()}/>)
         if (this.state.page === 0)
             site.push(<Main onClick={() => { this.handleMainClick(); }} />);
         // if (this.state.page === 1)
             // site.push(<Chat />);
         if (this.state.page === 2)
-            site.push(<ScoreTable key="ScoreBoard" user={this.getScoarBoard()} users={this.state.scoreBoard} />);
+            site.push(<ScoreTable key="ScoreBoard" user={this.getUserName} users={this.getScoreBoard} />);
         if (this.state.page === 3)
             site.push(<Auth key="SignIn" buttonValue="Sign In" onClick={(userInfo) => {this.handleSignInClick(userInfo);}}/>)
         if (this.state.page === 4)
@@ -55,27 +53,41 @@ export class MainPage extends React.Component {
     }
 
     handleExitClick() {
-        this.setState({user: null});
+        this.userId = null;
+        // this.setState({userId: null});
         this.setState({page: 0});
     }
 
     handleHeaderClick(i) {
         console.log(i);
+        if (i == 2)
+            this.scoreBoard = this.updateScoreBoard();
+            // this.setState({scoreBoard: this.updateScoreBoard()});
         this.setState({page: i});
     }
 
     handleSignInClick(userInfo) {
-        this.setState({page: 0})
-        console.log('main', userInfo);
-        this.setState({user: userInfo[0]});
-        console.log('main', this.state.user);
+        this.setState({page: 0});
+        this.userName = userInfo[0];
+        // this.setState({userName: userInfo[0]});
+        let res = JSON.stringify({'username': userInfo[0], 'password_hash': userInfo[1]});
+        let ans = requestPostUserLogin(res);
+
+        if (ans !== null)
+            this.userId = ans['id'];
+            // this.setState({userId: ans['id']});
     }
 
     handleSignUpClick(userInfo) {
-        this.setState({page: 0})
-        let res = JSON.stringify({
-            'username': userInfo[0], 'password_hash': userInfo[1]});
-        requestPostUserAdd(res);
+        this.setState({page: 0});
+        this.userName = userInfo[0];
+        // this.setState({userName: userInfo[0]});
+        let res = JSON.stringify({'username': userInfo[0], 'password_hash': userInfo[1]});
+        let ans = requestPutUserAdd(res);
+
+        if (ans !== null)
+            this.userId =ans['id'];
+            // this.setState({userId: ans['id']});
     }
 
     handleMainClick() {
@@ -86,15 +98,10 @@ export class MainPage extends React.Component {
     }
 
     updateScoreBoard() {
-        const response = requestGetUserGetAll();
+        const ans = requestGetUserGetAll();
         console.log('respose user/get/all');
-        console.log(response);
-        this.setState({scoreBoard: response});
+        this.state.scoreBoard = ans;
+        this.setState({scoreBoard: ans});
+        console.log(this.state.scoreBoard);
     }
-    
-    getScoarBoard() {
-        this.updateScoreBoard();
-        return (this.state.scoreBoard);
-    }
-
 }
