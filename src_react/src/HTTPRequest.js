@@ -8,7 +8,7 @@ let apiEngineCreateRoom = '/api/engine/create_room';
 let apiEngineGetRoomId = '/api/engine/get/';
 let apiEngineMove = '/api/engine/move/';
 let apiEngineExitRoom = '/api/engine/exit_room/';
-let url = 'https://71f1-195-133-239-83.eu.ngrok.io';
+let url = 'https://cca8-195-133-239-83.eu.ngrok.io';
 
 export function requestPutUserAdd(userJson) {
     let req = new XMLHttpRequest();
