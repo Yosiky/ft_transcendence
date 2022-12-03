@@ -1,6 +1,7 @@
 import React from "react";
-import { requestEngineCreateRoom } from "../HTTPRequest";
-
+import board from './board.png';
+import point from './point.png';
+import './index.css';
 
 export class Game extends React.Component {
 
@@ -20,7 +21,11 @@ export class Game extends React.Component {
         return (
         <div>
             <h2>Game</h2>
-            <canvas id="tutorial" width="150" height="150"></canvas>
+            <div className="placeForGame">
+                <img className="board playerOne" src={board} alt='playerOne'/>
+                <img className="point" src={point} alt='point'/>
+                <img className="board playerTwo" src={board} alt='playerTwo'/>
+            </div>
         </div>);
     } 
 } 

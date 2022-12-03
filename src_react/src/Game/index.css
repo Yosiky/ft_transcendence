@@ -1,0 +1,25 @@
+.board {
+    width: 20px;
+    height: 100px;
+}
+
+.playerOne {
+    position: absolute;
+    top: 500px;
+    left: 100px;
+}
+
+.playerTwo {
+    position: absolute;
+    top: 500px;
+    left: 1000px;
+}
+
+.point {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: 550px;
+    left: 550px;
+
+}
