@@ -42,7 +42,7 @@ export class MainPage extends React.Component {
         if (this.state.page === 4)
             site.push(<Auth key="SignUp" buttonValue="Sign Up" onClick={(userInfo) => {this.handleSignUpClick(userInfo);}}/>)
         if (this.state.page === 5)
-            site.push(<Game key="Game"  />)
+            site.push(<Game key="Game" userId={this.state.userId} />)
         // if (this.state.page === 0) {
             // site.push(<Content />)
         // }

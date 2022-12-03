@@ -4,11 +4,12 @@ let apiUserGetId = '/api/user/get/id/';
 let apiUserGetName = '/api/user/get/name/';
 let apiUserGetAll= '/api/user/get/all';
 let apiUserDelete = '/api/user/delete/';
+let apiEngineStart = '/api/engine/start/'
 let apiEngineCreateRoom = '/api/engine/create_room';
-let apiEngineGetRoomId = '/api/engine/get/';
+let apiEngineGet = '/api/engine/get/';
 let apiEngineMove = '/api/engine/move/';
 let apiEngineExitRoom = '/api/engine/exit_room/';
-let url = 'https://cca8-195-133-239-83.eu.ngrok.io';
+let url = 'https://7f3c-195-133-239-83.eu.ngrok.io';
 
 export function requestPutUserAdd(userJson) {
     let req = new XMLHttpRequest();
@@ -98,6 +99,19 @@ export function requestDeleteUserDelete() {
     return null;
 }
 
+export function requestPutEngineStart(userId) {
+    let req = new XMLHttpRequest();
+    let ans;
+
+    req.onerror = () => { alert('Error connecting'); };
+    req.open('PUT', url + apiEngineStart + userId, false);
+    req.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    req.send();
+    ans = JSON.parse(req.response);
+    if (req.status === 200)
+        return ans;
+    return null;
+}
 
 export function requestPutEngineCreateRoom(usersInfo) {
     let req = new XMLHttpRequest();
@@ -107,6 +121,21 @@ export function requestPutEngineCreateRoom(usersInfo) {
     req.open('PUT', url + apiEngineCreateRoom, false);
     req.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     req.send(usersInfo);
+    ans = JSON.parse(req.response);
+    if (req.status === 200)
+        return ans;
+    alert('Error: ' + ans['message']);
+    return null;
+}
+
+export function requestGetEngineGet(roomId) {
+    let req = new XMLHttpRequest();
+    let ans;
+
+    req.onerror = () => { alert('Error connecting'); };
+    req.open('GET', url + apiEngineGet + roomId, false);
+    req.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    req.send();
     ans = JSON.parse(req.response);
     if (req.status === 200)
         return ans;

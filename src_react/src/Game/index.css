@@ -5,13 +5,11 @@
 
 .playerOne {
     position: absolute;
-    top: 500px;
     left: 100px;
 }
 
 .playerTwo {
     position: absolute;
-    top: 500px;
     left: 1000px;
 }
 
@@ -21,5 +19,4 @@
     position: absolute;
     top: 550px;
     left: 550px;
-
 }
