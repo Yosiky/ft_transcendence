@@ -8,10 +8,10 @@
 }
 
 header {
-    background-color: white;
     display: flex;
     margin-left: auto;
     margin-right: auto;
+    background-image: url(../Ping-Pong.jpg);
 }
 
 .one {
@@ -32,7 +32,6 @@ header {
 
 .five {
     flex: 1 auto;
-
 }
 
 header button {
@@ -63,7 +62,6 @@ header button {
 .ImgButton {
     width: 50px;
     height: 50px;
-
 }
 
 button img {
@@ -72,4 +70,8 @@ button img {
     height: 50px;
     border-radius: 50%;
 
+}
+
+header button:hover {
+    border-color: black;
 }

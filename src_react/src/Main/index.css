@@ -3,6 +3,58 @@
     margin-right: auto;
     width: 18em;
     height: 24em;
-    background-color: white;
+    text-align: center;
+}
 
+.Main button {
+    width: 60px;
+    height: 60px;
+    border-color: grey;
+    transition-duration: 1s;
+	transition-property: width;
+
+    /* Важные стили для анимации */
+    position: relative;
+    overflow: hidden;
+}
+
+.Main button:after {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 200px;
+    margin-left: 50px;
+    background: #fff;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 1) 50%,
+        rgba(255, 255, 255, 0.5) 100%
+    );
+    left: -40px;
+    top: -100px;
+    z-index: 1;
+    transform: rotate(45deg);
+    position: absolute;
+    animation: movingFlare 3s ease-in-out 0.05s infinite;
+  }
+   
+  @keyframes movingFlare {
+    0% {
+      left: -30px;
+      margin-left: 0px;
+    }
+    30% {
+      left: 110%;
+      margin-left: 80px;
+    }
+    100% {
+      left: 110%;
+      margin-left: 80px;
+    }
+  }
+
+.Main button:hover
+{
+    width: 100px;
 }
