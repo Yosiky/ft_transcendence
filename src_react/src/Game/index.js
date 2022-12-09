@@ -25,8 +25,8 @@ export class Game extends React.Component {
         super(props);
         this.state = {
             roomId: null,
-            top0: null,
-            top1: null,
+            topOne: null,
+            topTwo: null,
             ball: null 
         };
         this.array = {
@@ -40,6 +40,7 @@ export class Game extends React.Component {
             score2: 0,
             BOARD_SIZE: 0
         };
+        this.scores = [0, 0];
         this.userFlag = 0;
         exitRoom = [
             setInterval(() => {this.updateUser()}, 200),
@@ -93,8 +94,6 @@ export class Game extends React.Component {
         this.state['topTwo'] = user2;
         this.array['ballx'] = ball['posx'];
         this.array['bally'] = ball['posy'];
-
-
         // this.setState({roomId: cRoomId['room_id']});
         // this.setState({topOne: user1});
         // this.setState({topTwo: user2});
@@ -110,20 +109,26 @@ export class Game extends React.Component {
         const cAns = requestGetEngineGet(this.state.roomId);
         console.log(cAns);
         if (cAns === null)
-        {
             this.props.exit();
-        }
         console.log('Engine update');
-        if (cAns['user1']['id'] === this.props.userId)
+        if (cAns['user1']['id'] === this.props.userId) {
+            this.state['topOne'] = cAns['user1'];
             this.state['topTwo'] = cAns['user2'];
             // this.setState({topTwo: cAns['user2']});
-        else
-            this.state['topOne'] = cAns['user1'];
+        }
+        else {
+            this.state['topOne'] = cAns['user2'];
+            this.state['topTwo'] = cAns['user1'];
+        }
         writeInArray = true;
+        this.scores[0] = cAns['user1']['score'];
+        this.scores[1] = cAns['user2']['score'];
         this.array['ballx'] = cAns['ball']['posx'];
         this.array['bally'] = cAns['ball']['posy'];
+        this.array['speedx'] = cAns['ball']['speedx'];
+        this.array['speedy'] = cAns['ball']['speedy'];
         writeInArray = false;
-            // this.setState({topOne: cAns['user1']});
+        // this.setState({topOne: cAns['user1']});
         // this.state['ball'] = cAns['ball'];
         // this.setState({'ball': cAns['ball']});
         this.forceUpdate();
@@ -141,7 +146,8 @@ export class Game extends React.Component {
         const two = this.userFlag === 1 ? this.keyDownHandler: null;
         return (
         <div>
-            <h2>Game</h2>
+            <h2>Game {this.scores[0]}::{this.scores[1]}</h2>
+            
             <div className="placeForGame">
                 {/* <img onKeyDown={one} style={{top: 100 + this.state.topOne['board_position'] * 1000}} className=" board playerOne" src={board} alt='playerOne'/> */}
                 <div style={{top: 125 + this.state.ball['posx'] * 995, left: 15 + this.state.ball['posy'] * 995}} className=" point" src={point} alt='point'> </div>
