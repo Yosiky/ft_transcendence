@@ -3,10 +3,7 @@ import board from './board.png';
 import point from './point.png';
 import './index.css';
 import { requestGetEngineGet, requestGetUserGetId, requestPostUserLogin, requestPutEngineStart, requestPostEngineMoveId} from '../HTTPRequest';
-
-function updateWindow() {
-
-}
+// import photo_loading from './loading-1.webp';
 
 const sizeBoard = 1000;
 
@@ -27,15 +24,17 @@ export class Game extends React.Component {
             roomId: null,
             topOne: null,
             topTwo: null,
-            ball: null 
+            ball: null
+            // ball: {'posx': 450,
+            //         'posy': 450}, 
         };
         this.array = {
             ballx: 0.5,
             bally: 0.5,
-            pos1: 0,
-            pos2: 0,
-            speedx: 0.05,
-            speedy: 0.05,
+            pos1: 450,
+            pos2: 450,
+            speedx: 0.02,
+            speedy: 0.01,
             score1: 0,
             score2: 0,
             BOARD_SIZE: 0
@@ -44,7 +43,7 @@ export class Game extends React.Component {
         this.userFlag = 0;
         exitRoom = [
             setInterval(() => {this.updateUser()}, 200),
-            setInterval(() => {this.updateBall()}, 150)
+            setInterval(() => {this.updateBall()}, 25)
         ];
         this.keyDownHandler = (event) => {
             console.log(event.code);
@@ -92,8 +91,8 @@ export class Game extends React.Component {
         this.state['roomId'] = cRoomId['room_id'];
         this.state['topOne'] = user1;
         this.state['topTwo'] = user2;
-        this.array['ballx'] = ball['posx'];
-        this.array['bally'] = ball['posy'];
+        // this.array['ballx'] = ball['posx'];
+        // this.array['bally'] = ball['posy'];
         // this.setState({roomId: cRoomId['room_id']});
         // this.setState({topOne: user1});
         // this.setState({topTwo: user2});
@@ -135,22 +134,17 @@ export class Game extends React.Component {
     }
 
     render() {
-        // if (this.state.roomId === null) {
-            // alert(`Че? Дохуя умный что ли?`);
-            // return ;
-        // }
-        //todo
         if (this.state.ball === null)
-            return (<div>Wait</div>);
+            return (<div className="photo_load"><img src='https://i.gifer.com/XOsX.gif' alt='error'/></div>);
         const one = this.userFlag === 0 ? this.keyDownHandler: null;
         const two = this.userFlag === 1 ? this.keyDownHandler: null;
         return (
         <div>
-            <h2>Game {this.scores[0]}::{this.scores[1]}</h2>
+            <h1 className="game">Game {this.scores[0]}::{this.scores[1]}</h1>
             
             <div className="placeForGame">
                 {/* <img onKeyDown={one} style={{top: 100 + this.state.topOne['board_position'] * 1000}} className=" board playerOne" src={board} alt='playerOne'/> */}
-                <div style={{top: 125 + this.state.ball['posx'] * 995, left: 15 + this.state.ball['posy'] * 995}} className=" point" src={point} alt='point'> </div>
+                <div style={{top: 125 + this.state.ball['posx'] * 995, left: 450 + this.state.ball['posy'] * 995}} className=" point" src={point} alt='point'> </div>
                 {/* <img onKeyDown={two} style={{top: 100 + this.state.topTwo['board_position'] * 1000}} className=" board playerTwo" src={board} alt='playerTwo'/> */}
             </div>
         </div>);
